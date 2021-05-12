@@ -1,70 +1,177 @@
-# Getting Started with Create React App
+# Project Name
+SEEINTEL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+SEEINTEL is an app for cyber security investigators. The app retrieves information from different APIs about flagged URLs, Domains and IPs. Based on the fetched threat intelligence, investigators can take decisions in a timely manner.
 
-In the project directory, you can run:
+## User Stories
 
-### `yarn start`
+-  **404:** As an anon/user I can see a 404 page if I try to reach a page that does not exist so that I know it's my fault
+-  **Signup:** As an anon I can sign up in the platform so that I can start searching for threat intelligence.
+-  **Login:** As a user I can login to the platform so that I can search for threat intelligence.
+-  **Logout:** As a user I can logout from the platform so no one else can use it.
+-  **Search Information** As a user I want to search information about flagged URLs, Domains and IPs.
+-  **See Detailed Information** As a user I want to see detailed information about flagged URLs, Domains and IPs.
+-  **Save Information** As a user I can save the retrieved information on my dashboard.
+-  **List Information** As a user I want to see the list of saved information on my dashboard.
+-  **See Saved Information** As a user I want to see the saved piece of information.
+-  **Delete Saved Information** As a user I want to delete the saved information.
+-  **Add/Edit Notes To Saved Information** As a user I want to add notes to the saved information.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Backlog
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Delete user account
+- About page
+- Search tips
+  
+## Routes
 
-### `yarn test`
+- / - Homepage
+- /about - About
+- /auth/signup - Sign up form
+- /auth/signin - Sign in form
+- /user - User dashboard
+- /user/tips - Searching tips
+- /search - All search results
+- /search/:id - Specific/Saved search result 
+- 404
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Pages
 
-### `yarn build`
+- Homepage (public)
+- About (public)
+- Sign up (public)
+- Sign in (public)
+- User dashboard (user only)
+- Search tips (user only)
+- All search results (user only)
+- Specific search result (user only)
+- Saved search result (user only)
+- 404 page (public)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Components
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- NavBar
+- FooterBar
+- Homepage
+- About
+- SignupPage
+- SigninPage
+- UserDashboard
+- SearchForm
+- SearchTips
+- SearchResults
+- OneSearchResult
+- SavedSearchResult
+- 404page
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Services
 
-### `yarn eject`
+- Auth Service
+  - auth.login(user)
+  - auth.signup(user)
+  - auth.signin()
+  - auth.user()
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- External APIs
+  - API for URLs
+  - API for Domains
+  - API for IPs
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Models
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**User model**
+- username: {
+    type: String,
+    required: true,
+    unique: true
+}
+- email: {
+    type: String
+    required: true,
+    unique: true
+}
+- password: {
+    type: String,
+    required: true
+}
 
-## Learn More
+**Domain Model**
+id - String
+type - String
+categories - Object
+whois - String
+whois_date - Number
+registrar - String
+creation_date - Number
+jarm - String
+last_analysis_results - Object
+last_analysis_stats - Object
+last_dns_records - Array of Objects
+last_dns_records_date - Number
+last_https_certificate - Object
+last_https_certificate_date - Number
+last_modification_date - Number
+last_update_date - Number
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Ip model**
+id - String
+type - String
+continent - String
+as_owner - String
+country - String
+network - String
+whois - String
+whois_date - Number
+asn - Number
+jarm - String
+last_analysis_results - Object
+last_analysis_stats - Object
+last_https_certificate - Object
+last_https_certificate_date - String
+last_modification_date - Number
+regional_internet_registry - String
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Notes model**
+- note: String
+- ip: [{type: Schema.Types.ObjectId,ref:'Ip'}]
+- domain: [{type: Schema.Types.ObjectId,ref:'Domain'}]
 
-### Code Splitting
+## API Endpoints/Backend Routes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- GET /auth/user
+- POST /auth/signup
+  - body:
+    - username
+    - email
+    - password
+- POST /auth/login
+  - body:
+    - username
+    - password
+- POST /auth/logout
+  - body: (empty)
+- GET search/:id 
+- DELETE search/:id 
+- PATCH search/:id 
 
-### Analyzing the Bundle Size
+## Links
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Trello/Kanban
 
-### Making a Progressive Web App
+https://trello.com/b/QvFpSpG7/project-3
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### GitHub
 
-### Advanced Configuration
+https://github.com/DanielTraci/seeintel-client
+https://github.com/DanielTraci/seeintel-server
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[Deploy Link](http://heroku.com)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Slides
 
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Slides Link](http://slides.com)
