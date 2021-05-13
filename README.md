@@ -24,6 +24,23 @@ SEEINTEL is an app for cyber security investigators. The app retrieves informati
 - Delete user account
 - About page
 - Search tips
+- Model for IPs:
+id - String
+type - String
+continent - String
+as_owner - String
+country - String
+network - String
+whois - String
+whois_date - Number
+asn - Number
+jarm - String
+last_analysis_results - Object
+last_analysis_stats - Object
+last_https_certificate - Object
+last_https_certificate_date - String
+last_modification_date - Number
+regional_internet_registry - String
   
 ## Routes
 
@@ -58,7 +75,7 @@ SEEINTEL is an app for cyber security investigators. The app retrieves informati
 - About
 - SignupPage
 - SigninPage
-- UserDashboard
+- Dashboard
 - SearchForm
 - SearchTips
 - SearchResults
@@ -98,6 +115,8 @@ SEEINTEL is an app for cyber security investigators. The app retrieves informati
     type: String,
     required: true
 }
+- notes: [{type: Schema.Types.ObjectId,ref:'Notes'}]
+- domain: [{type: Schema.Types.ObjectId,ref:'Domain'}]
 
 **Domain Model**
 id - String
@@ -117,27 +136,9 @@ last_https_certificate_date - Number
 last_modification_date - Number
 last_update_date - Number
 
-**Ip model**
-id - String
-type - String
-continent - String
-as_owner - String
-country - String
-network - String
-whois - String
-whois_date - Number
-asn - Number
-jarm - String
-last_analysis_results - Object
-last_analysis_stats - Object
-last_https_certificate - Object
-last_https_certificate_date - String
-last_modification_date - Number
-regional_internet_registry - String
 
 **Notes model**
 - note: String
-- ip: [{type: Schema.Types.ObjectId,ref:'Ip'}]
 - domain: [{type: Schema.Types.ObjectId,ref:'Domain'}]
 
 ## API Endpoints/Backend Routes
@@ -148,7 +149,7 @@ regional_internet_registry - String
     - username
     - email
     - password
-- POST /auth/login
+- POST /auth/signin
   - body:
     - username
     - password

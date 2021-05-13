@@ -1,25 +1,15 @@
-import logo from "../logo.svg";
-import "../App.css";
+import { Button } from '@material-ui/core'
+import React, {Component} from 'react'
+import {Link} from "react-router-dom"
 
 function HomePage() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <h1>SEEINTEL is your one-stop source to access cyber threat intelligence from multiple origins</h1>
+      <h2>home page</h2>
+      <Link to="/signup">Sign Up</Link>
+      <Link to="/signin">Sign In</Link>
     </div>
   );
 }
-
 export default HomePage;
