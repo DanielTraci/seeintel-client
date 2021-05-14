@@ -7,8 +7,8 @@ function HomePage() {
     <div >
       <h1>SEEINTEL is your one-stop source to access cyber threat intelligence from multiple origins</h1>
       <h2>home page</h2>
-      <Link to="/signup">Sign Up</Link>
-      <Link to="/signin">Sign In</Link>
+      <Link to="/signin"><Button color="inherit">Sign in</Button></Link>
+      <Link to="/signup"><Button color="inherit">Sign Up</Button></Link>
     </div>
   );
 }

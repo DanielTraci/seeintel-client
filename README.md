@@ -50,7 +50,6 @@ regional_internet_registry - String
 - /auth/signin - Sign in form
 - /user - User dashboard
 - /user/tips - Searching tips
-- /search - All search results
 - /search/:id - Specific/Saved search result 
 - 404
 
@@ -78,8 +77,7 @@ regional_internet_registry - String
 - Dashboard
 - SearchForm
 - SearchTips
-- SearchResults
-- OneSearchResult
+- SearchResult
 - SavedSearchResult
 - 404page
 

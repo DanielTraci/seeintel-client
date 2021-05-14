@@ -13,7 +13,7 @@ function SignIn(props){
                 <label for="password">Password</label>
                 <input type="password" name='password'/>
             </div>
-            <button type="submit">Submit</button>
+            <button type="submit">Sing in</button>
         </form>
     )
 }

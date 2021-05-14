@@ -7,17 +7,17 @@ import SignIn from "./components/SingIn";
 import HomePage from "./pages/HomePage";
 import UserDashboard from "./components/UserDashboard";
 import NavBar from "./components/NavBar";
-
-
-
+import SearchBar from "./components/SearchBar";
+import AboutPage from "./pages/AboutPage";
+import SingleDomain from "./components/SingleDomain";
 
 
 class App extends Component {
   state = {
     user: null,
-    error: null
+    error: null,
+    fetchingUser: true
   }
-  
   
   handleSignUp = (e) => {
     e.preventDefault()
@@ -29,7 +29,7 @@ class App extends Component {
       } 
     console.log(newUser)
       
-      axios.post(`${config.API_URL}/api/signup`, newUser)
+      axios.post(`${config.API_URL}/api/signup`, newUser, {withCredentials: true})
       .then((response) => {
         this.setState({
           user: response.data
@@ -50,7 +50,7 @@ class App extends Component {
         password: password.value
       } 
       
-      axios.post(`${config.API_URL}/api/signin`, newUser)
+      axios.post(`${config.API_URL}/api/signin`, newUser, {withCredentials: true})
       .then((response) => {
         this.setState({
           user: response.data,
@@ -71,6 +71,8 @@ class App extends Component {
         .then(() => {
           this.setState({
             user: null
+          }, () => {
+            this.props.history.push('/')
           })
         })
         .catch((errorObj) => {
@@ -80,18 +82,39 @@ class App extends Component {
       })
   }
 
+  componentDidMount() {
+    axios.get(`${config.API_URL}/api/user`, {withCredentials: true}) 
+    .then((response) => {
+      this.setState({ 
+        user: response.data,
+        fetchingUser: false,
+      })
+    })
+    .catch((errorObj) => {
+      this.setState({
+        error: errorObj.response.data,
+        fetchingUser: false,
+      })
+    })    
+  }
+
   render() {
     const{error, user} = this.state
     return (
       <div>
         <NavBar onLogout={this.handleLogout} user={user}/>
+        
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route path="/about" component={AboutPage} />
           <Route path="/user" component={UserDashboard}/>
+          <Route path="/search/:result" render={(routeProps) => {
+            return <SingleDomain {...routeProps} />}}/>
           <Route  path="/signin" error={error} render={(routeProps) => {
                   return  <SignIn onSignIn={this.handleSignIn} {...routeProps}  />}}/>
           <Route  path="/signup"  render={(routeProps) => {
                   return  <SignUp onSignUp={this.handleSignUp} {...routeProps}  />}}/>
+          
         </Switch>
       </div>
     )
