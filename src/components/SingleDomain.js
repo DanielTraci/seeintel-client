@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 import config from '../config'
+import AddNote from './AddNote'
 
 class SingleDomain extends Component {
     state = {
@@ -9,16 +10,13 @@ class SingleDomain extends Component {
     }
 
     fetchData = () => {
-        console.log('hello')
         let websiteDomain = this.props.match.params.result
-
         axios.get(`https://www.virustotal.com/api/v3/domains/${websiteDomain}`, {headers: {"x-apikey" : config.API_KEY }})
         .then((response) => {
             this.setState({
                 domainDetails: response.data.data
             })
         })
-
         .catch((err) => {});
     }
 
@@ -28,12 +26,12 @@ class SingleDomain extends Component {
 
     render() {
         const {domainDetails} = this.state
+        const { onAdd } = this.props
 
         if (!domainDetails) {
             return <h2>Loading...</h2>;
         }
-        console.log(domainDetails)
-        
+
         {/*
         let analysisResults = Object.keys(domainDetails.attributes.last_analysis_results)
         
@@ -42,8 +40,10 @@ class SingleDomain extends Component {
         */}
         return (
             <div>
+
                 <h1>.</h1>
                 <h1>.</h1>
+                <AddNote onAdd={onAdd} />
                 <button type="submit">Save to my dashboard</button>
                 <p><b>ID:</b> {domainDetails.id}</p>
                 <p><b>Type:</b> {domainDetails.type}</p>

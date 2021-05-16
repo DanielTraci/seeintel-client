@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 import SingleDomain from "./components/SingleDomain";
 import HomePage from "./components/HomePage";
 import SavedResultDetail from "./components/SavedResultDetail";
+import EditNote from "./components/EditNote";
 
 
 
@@ -17,6 +18,8 @@ class App extends Component {
     user: null,
     error: null,
     fetchingUser: true,
+    notes: [],
+
   }
   
   handleSignUp = (e) => {
@@ -26,9 +29,7 @@ class App extends Component {
         username: username.value,
         email: email.value,
         password: password.value
-      } 
-    console.log(newUser)
-      
+      }      
       axios.post(`${config.API_URL}/api/signup`, newUser, {withCredentials: true})
       .then((response) => {
         this.setState({
@@ -99,27 +100,91 @@ class App extends Component {
  
   }
 
+  handleAdd = (event) => {
+    event.preventDefault()
+    let newNote = {
+      myNote: event.target.myNote.value
+    }
+    console.log(newNote)
+    axios.post(`${config.API_URL}/api/create`, newNote, {withCredentials: true})
+      .then((response) => {
+        console.log(response.data)
+          this.setState({
+            notes: [response.data , ...this.state.notes]
+          }, () => {
+              this.props.history.push('/user')
+          })
+      })
+      .catch(() => {
+        console.log('Add note failed')
+      })
+  }
+
+  handleDelete = (savedResult) => {
+    axios.delete(`${config.API_URL}/api/notes/${savedResult._id}`, { withCredentials: true })
+    .then(() => {
+        let filterNotes = this.state.notes.filter((note) => {
+            return note._id !== savedResult._id
+        })
+        this.setState({
+          notes: filterNotes
+        }, () => {
+          this.props.history.push('/user')
+        })
+    })
+    .catch(() => {
+        console.log('Delete failed')
+    })
+
+}
+
+  handleEdit = (savedResult) => {
+    axios.patch(`${config.API_URL}/api/notes/${savedResult._id}`, savedResult)
+      .then(() => {
+
+          let updatedNotes = this.state.notes.map((note) => {
+              if  (note._id == savedResult._id) {
+                note.myNote = savedResult.myNote
+              }
+              console.log(note)
+              return note
+          })
+        this.setState({
+          notes: updatedNotes
+        }, () => {
+          this.props.history.push('/user')
+        })
+      })
+      .catch(() =>{
+        console.log('Edit crashed')
+      })
+  }
+
   render() {
     const{error, user, notes} = this.state
     return (
       <div>
         <NavBar onLogout={this.handleLogout} user={user}/>
-        
         <Switch>
-
           <Route exact path="/" component={HomePage} />
-          {/*<Route path="/user" component={UserDashboard}/>*/}
+          
           <Route path="/user"  render={(routeProps) => {
             return  <UserDashboard notes={notes} {...routeProps}  />}}/>
+
           <Route path="/search/:result" render={(routeProps) => {
-            return <SingleDomain {...routeProps} />}}/>
+            return <SingleDomain onAdd={this.handleAdd} {...routeProps} />}}/>
+
           <Route path="/signin" error={error} render={(routeProps) => {
             return  <SignIn onSignIn={this.handleSignIn} {...routeProps}  />}}/>
+
           <Route path="/signup"  render={(routeProps) => {
             return  <SignUp onSignUp={this.handleSignUp} {...routeProps}  />}}/>
-          <Route path="/notes/:noteId"  render={(routeProps) => {
-            return <SavedResultDetail {...routeProps}/> }}/>
 
+          <Route exact path="/notes/:noteId"  render={(routeProps) => {
+            return <SavedResultDetail onDelete={this.handleDelete} {...routeProps}/> }}/>
+
+          <Route exact path="/notes/:noteId/edit"  render={(routeProps) => {
+            return <EditNote onEdit={this.handleEdit} {...routeProps}/> }}/>
           
         </Switch>
       </div>

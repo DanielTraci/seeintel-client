@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import SearchBar from './SearchBar'
 import axios from 'axios'
 import config from '../config'
-import {TextField, makeStyles} from '@material-ui/core'
-import { Button } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
 
@@ -18,8 +16,7 @@ export default class UserDashboard extends Component {
         axios.get(`${config.API_URL}/api/notes`)
         .then((response) => {
           this.setState({notes: response.data})
-        }).catch((err) => {
-          
+        }).catch((err) => { 
         });   
     }
 
@@ -40,23 +37,13 @@ export default class UserDashboard extends Component {
                         <div key={note._id}>
                             <Link to={`/notes/${note._id}`}>{note.myNote}</Link>
                             <div>
-                                <button>Edit</button>
                                 <button>Delete note</button>
                             </div>
                         </div>
                         )
                     })
                 }
-                <form className={classes.root} noValidate autoComplete="off">
-                        <TextField
-                        id="outlined-multiline-static"
-                        label="Add your notes"
-                        multiline
-                        rows={5}
-                        variant="outlined"
-                        />
-                        <Button type="submit" color="inherit">Add your note</Button> 
-                </form>
+
             </div>
         )
     }
