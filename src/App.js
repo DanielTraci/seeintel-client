@@ -4,19 +4,19 @@ import config from './config';
 import axios from 'axios';
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SingIn";
-import HomePage from "./pages/HomePage";
 import UserDashboard from "./components/UserDashboard";
 import NavBar from "./components/NavBar";
-import SearchBar from "./components/SearchBar";
-import AboutPage from "./pages/AboutPage";
 import SingleDomain from "./components/SingleDomain";
+import HomePage from "./components/HomePage";
+import SavedResultDetail from "./components/SavedResultDetail";
+
 
 
 class App extends Component {
   state = {
     user: null,
     error: null,
-    fetchingUser: true
+    fetchingUser: true,
   }
   
   handleSignUp = (e) => {
@@ -95,25 +95,31 @@ class App extends Component {
         error: errorObj.response.data,
         fetchingUser: false,
       })
-    })    
+    })
+ 
   }
 
   render() {
-    const{error, user} = this.state
+    const{error, user, notes} = this.state
     return (
       <div>
         <NavBar onLogout={this.handleLogout} user={user}/>
         
         <Switch>
+
           <Route exact path="/" component={HomePage} />
-          <Route path="/about" component={AboutPage} />
-          <Route path="/user" component={UserDashboard}/>
+          {/*<Route path="/user" component={UserDashboard}/>*/}
+          <Route path="/user"  render={(routeProps) => {
+            return  <UserDashboard notes={notes} {...routeProps}  />}}/>
           <Route path="/search/:result" render={(routeProps) => {
             return <SingleDomain {...routeProps} />}}/>
-          <Route  path="/signin" error={error} render={(routeProps) => {
-                  return  <SignIn onSignIn={this.handleSignIn} {...routeProps}  />}}/>
-          <Route  path="/signup"  render={(routeProps) => {
-                  return  <SignUp onSignUp={this.handleSignUp} {...routeProps}  />}}/>
+          <Route path="/signin" error={error} render={(routeProps) => {
+            return  <SignIn onSignIn={this.handleSignIn} {...routeProps}  />}}/>
+          <Route path="/signup"  render={(routeProps) => {
+            return  <SignUp onSignUp={this.handleSignUp} {...routeProps}  />}}/>
+          <Route path="/notes/:noteId"  render={(routeProps) => {
+            return <SavedResultDetail {...routeProps}/> }}/>
+
           
         </Switch>
       </div>

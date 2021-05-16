@@ -79,6 +79,7 @@ regional_internet_registry - String
 - SearchTips
 - SearchResult
 - SavedSearchResult
+- AddNote
 - 404page
 
 ## Services
@@ -90,9 +91,7 @@ regional_internet_registry - String
   - auth.user()
 
 - External APIs
-  - API for URLs
   - API for Domains
-  - API for IPs
 
 # Server
 
@@ -113,7 +112,7 @@ regional_internet_registry - String
     type: String,
     required: true
 }
-- notes: [{type: Schema.Types.ObjectId,ref:'Notes'}]
+- notes: [{type: Schema.Types.ObjectId,ref:'Note'}]
 - domain: [{type: Schema.Types.ObjectId,ref:'Domain'}]
 
 **Domain Model**

@@ -1,10 +1,22 @@
 import React from 'react'
-import {AppBar, Toolbar, IconButton, Typography, Button} from '@material-ui/core'
-import { Link } from 'react-router-dom'
+import {AppBar, Toolbar, IconButton, Typography, Button, makeStyles} from '@material-ui/core'
+import { Link, Route } from 'react-router-dom'
 import UserDashboard from './UserDashboard'
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+  }));
+
 export default function NavBar(props) {
-    const classes = {}
+    const classes = useStyles();
     const {user, onLogout, onSignUp, onSignIn} = props
     return (
         <div>
@@ -14,7 +26,7 @@ export default function NavBar(props) {
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
                 <Link to="/">HOME</Link>
-                <Link to="/about">ABOUT</Link>
+
                 </Typography>
                 {
                     user ? (
