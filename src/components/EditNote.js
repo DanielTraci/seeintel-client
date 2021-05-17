@@ -30,7 +30,7 @@ export default class EditNote extends Component {
         const { savedResult } = this.state
         let cloneSavedResult = JSON.parse(JSON.stringify(savedResult))
 
-        cloneSavedResult.name = updatedNote
+        cloneSavedResult.myNote = updatedNote
 
         this.setState({
             savedResult: cloneSavedResult
@@ -48,7 +48,7 @@ export default class EditNote extends Component {
                 <h1>.</h1>
                 <h1>Edit note</h1>
                 <form>
-                    <input onChange={this.handleEditNote} type="text" value={savedResult.myNote} />
+                    <textarea onChange={this.handleEditNote} type="text" value={savedResult.myNote} />
                     <button onClick={() => {onEdit(savedResult)}}>Save note</button>
                 </form>
             </div>

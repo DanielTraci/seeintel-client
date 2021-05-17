@@ -10,6 +10,7 @@ import SingleDomain from "./components/SingleDomain";
 import HomePage from "./components/HomePage";
 import SavedResultDetail from "./components/SavedResultDetail";
 import EditNote from "./components/EditNote";
+import SavedDomain from "./components/SavedDomain";
 
 
 
@@ -19,6 +20,7 @@ class App extends Component {
     error: null,
     fetchingUser: true,
     notes: [],
+    domains: []
 
   }
   
@@ -141,7 +143,6 @@ class App extends Component {
   handleEdit = (savedResult) => {
     axios.patch(`${config.API_URL}/api/notes/${savedResult._id}`, savedResult)
       .then(() => {
-
           let updatedNotes = this.state.notes.map((note) => {
               if  (note._id == savedResult._id) {
                 note.myNote = savedResult.myNote
@@ -160,8 +161,29 @@ class App extends Component {
       })
   }
 
+  handleSaveDomain = (myDomain) => {
+    let newDomain = {
+      myDomain: myDomain.id,
+      data: myDomain
+      }      
+      axios.post(`${config.API_URL}/api/domains/create`, newDomain, {withCredentials: true})
+      .then((response) => {
+        this.setState({
+          domains: response.data 
+        }, () => {
+          this.props.history.push('/user')
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+
+
+    
+
   render() {
-    const{error, user, notes} = this.state
+    const{error, user, notes, domains} = this.state
     return (
       <div>
         <NavBar onLogout={this.handleLogout} user={user}/>
@@ -169,11 +191,15 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           
           <Route path="/user"  render={(routeProps) => {
-            return  <UserDashboard notes={notes} {...routeProps}  />}}/>
+            return  <UserDashboard notes={notes} domains={domains} {...routeProps}  />}}/>
 
           <Route path="/search/:result" render={(routeProps) => {
-            return <SingleDomain onAdd={this.handleAdd} {...routeProps} />}}/>
-
+            return <SingleDomain onSaveDomain={this.handleSaveDomain} {...routeProps} />}}/>
+          {/* this was taken out of the route above > onAdd={this.handleAdd} 
+              and put below*/}
+          <Route path="/domains/:domainId" render={(routeProps) => {
+            return <SavedDomain onAdd={this.handleAdd} {...routeProps} />}}/>
+          
           <Route path="/signin" error={error} render={(routeProps) => {
             return  <SignIn onSignIn={this.handleSignIn} {...routeProps}  />}}/>
 

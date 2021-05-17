@@ -24,8 +24,6 @@ class SavedResultDetail extends Component {
             })
     }
    
-
-
     render() {
         const {savedResult, fetchNote} = this.state
         const {onDelete} = this.props
@@ -38,7 +36,7 @@ class SavedResultDetail extends Component {
             <div>
                 <h2>empty space</h2>
                 <h2>empty space</h2>
-                <h2>Saved result details</h2>
+                <h2>Saved notes (will go away)</h2>
                 <h3>{savedResult.myNote}</h3>
                 <Link to={`/notes/${savedResult._id}/edit`}><button>Edit</button></Link>
                 <button onClick={() => { onDelete(savedResult)  }}>Delete note</button>

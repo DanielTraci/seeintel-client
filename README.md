@@ -173,3 +173,29 @@ https://github.com/DanielTraci/seeintel-server
 ### Slides
 
 [Slides Link](http://slides.com)
+
+
+# !!! DANGEROUS WEBSITES to test the application. DO NOT ENTER ANY OF THESE WEBSITES !!!
+<!-- 17ebook.com
+dfwdiesel.net
+divineenterprises.net
+ginedis.com
+gncr.org
+hihanin.com
+kingfamilyphotoalbum.com
+likaraoke.com
+mactep.org
+magic4you.nu
+marbling.pe.kr
+nacjalneg.info
+purplehoodie.com
+qsng.cn
+seksburada.net
+sportsmansclub.net
+stock888.cn
+tathli.com
+teamclouds.com
+texaswhitetailfever.com
+wadefamilytree.org
+xnescat.info
+yt118.com -->

@@ -6,11 +6,9 @@ export default class AddNote extends Component {
         const {onAdd} = this.props
         return (
             <div>
-                <h1>.</h1>
-                <h1>.</h1>
-                <h1>Add notes to keep track of things</h1>
+                <h3>Add notes to keep track of things</h3>
                 <form onSubmit={onAdd}>
-                    <input type="text" name="myNote" />
+                    <textarea type="text" name="myNote" />
                     <button>Save</button>
                 </form>
             </div>
