@@ -6,9 +6,9 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/SingIn";
 import UserDashboard from "./components/UserDashboard";
 import NavBar from "./components/NavBar";
-import SingleDomain from "./components/SingleDomain";
+import SearchedDomain from "./components/SearchedDomain";
 import HomePage from "./components/HomePage";
-import SavedResultDetail from "./components/SavedResultDetail";
+import SavedNote from "./components/SavedNote";
 import EditNote from "./components/EditNote";
 import SavedDomain from "./components/SavedDomain";
 
@@ -102,7 +102,7 @@ class App extends Component {
  
   }
 
-  handleAdd = (event) => {
+  handleAddNote = (event) => {
     event.preventDefault()
     let newNote = {
       myNote: event.target.myNote.value
@@ -111,10 +111,9 @@ class App extends Component {
     axios.post(`${config.API_URL}/api/create`, newNote, {withCredentials: true})
       .then((response) => {
         console.log(response.data)
+
           this.setState({
             notes: [response.data , ...this.state.notes]
-          }, () => {
-              this.props.history.push('/user')
           })
       })
       .catch(() => {
@@ -122,16 +121,14 @@ class App extends Component {
       })
   }
 
-  handleDelete = (savedResult) => {
-    axios.delete(`${config.API_URL}/api/notes/${savedResult._id}`, { withCredentials: true })
+  handleDeleteNote = (savedNote) => {
+    axios.delete(`${config.API_URL}/api/notes/${savedNote._id}`, { withCredentials: true })
     .then(() => {
         let filterNotes = this.state.notes.filter((note) => {
-            return note._id !== savedResult._id
+            return note._id !== savedNote._id
         })
         this.setState({
           notes: filterNotes
-        }, () => {
-          this.props.history.push('/user')
         })
     })
     .catch(() => {
@@ -140,12 +137,12 @@ class App extends Component {
 
 }
 
-  handleEdit = (savedResult) => {
-    axios.patch(`${config.API_URL}/api/notes/${savedResult._id}`, savedResult)
+  handleEdit = (savedNote) => {
+    axios.patch(`${config.API_URL}/api/notes/${savedNote._id}`, savedNote)
       .then(() => {
           let updatedNotes = this.state.notes.map((note) => {
-              if  (note._id == savedResult._id) {
-                note.myNote = savedResult.myNote
+              if  (note._id == savedNote._id) {
+                note.myNote = savedNote.myNote
               }
               console.log(note)
               return note
@@ -179,7 +176,23 @@ class App extends Component {
       })
     }
 
-
+  handleDeleteDomain = (savedDomain) => {
+      axios.delete(`${config.API_URL}/api/domains/${savedDomain._id}`, { withCredentials: true })
+      .then(() => {
+          let filterDomains = this.state.domains.filter((domain) => {
+              return domain._id !== savedDomain._id
+          })
+          this.setState({
+            domains: filterDomains
+          }, () => {
+            this.props.history.push('/user')
+          })
+      })
+      .catch(() => {
+          console.log('Delete failed')
+      })
+  
+  }
     
 
   render() {
@@ -191,23 +204,22 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           
           <Route path="/user"  render={(routeProps) => {
-            return  <UserDashboard notes={notes} domains={domains} {...routeProps}  />}}/>
+            return  <UserDashboard domains={domains} {...routeProps}  />}}/>
 
           <Route path="/search/:result" render={(routeProps) => {
-            return <SingleDomain onSaveDomain={this.handleSaveDomain} {...routeProps} />}}/>
-          {/* this was taken out of the route above > onAdd={this.handleAdd} 
-              and put below*/}
-          <Route path="/domains/:domainId" render={(routeProps) => {
-            return <SavedDomain onAdd={this.handleAdd} {...routeProps} />}}/>
-          
+            return <SearchedDomain onSaveDomain={this.handleSaveDomain} {...routeProps} />}}/>
+
           <Route path="/signin" error={error} render={(routeProps) => {
             return  <SignIn onSignIn={this.handleSignIn} {...routeProps}  />}}/>
 
           <Route path="/signup"  render={(routeProps) => {
             return  <SignUp onSignUp={this.handleSignUp} {...routeProps}  />}}/>
 
+          <Route exact path="/domains/:domainId"  render={(routeProps) => {
+            return <SavedDomain notes={notes}  onAdd={this.handleAddNote} onDeleteNote={this.handleDeleteNote} onDeleteDomain={this.handleDeleteDomain} {...routeProps}/> }}/>
+
           <Route exact path="/notes/:noteId"  render={(routeProps) => {
-            return <SavedResultDetail onDelete={this.handleDelete} {...routeProps}/> }}/>
+            return <SavedNote onDeleteNote={this.handleDeleteNote} {...routeProps}/> }}/>
 
           <Route exact path="/notes/:noteId/edit"  render={(routeProps) => {
             return <EditNote onEdit={this.handleEdit} {...routeProps}/> }}/>

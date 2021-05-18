@@ -3,10 +3,10 @@ import axios from 'axios'
 import config from '../config'
 import { withRouter, Link } from "react-router-dom";
 
-class SavedResultDetail extends Component {
+class SavedNote extends Component {
 
     state = {
-        savedResult: [],
+        savedNote: [],
         fetchNote: true
     }
 
@@ -15,7 +15,7 @@ class SavedResultDetail extends Component {
         axios.get(`${config.API_URL}/api/notes/${noteId}`, { withCredentials: true })
             .then((response) => {
                     this.setState({ 
-                        savedResult: response.data, 
+                        savedNote: response.data, 
                         fetchNote: false
                     })
             })
@@ -25,8 +25,8 @@ class SavedResultDetail extends Component {
     }
    
     render() {
-        const {savedResult, fetchNote} = this.state
-        const {onDelete} = this.props
+        const {savedNote, fetchNote} = this.state
+        const {onDeleteNote} = this.props
 
         if(fetchNote) {
             return <p>Loding ...</p>
@@ -37,12 +37,12 @@ class SavedResultDetail extends Component {
                 <h2>empty space</h2>
                 <h2>empty space</h2>
                 <h2>Saved notes (will go away)</h2>
-                <h3>{savedResult.myNote}</h3>
-                <Link to={`/notes/${savedResult._id}/edit`}><button>Edit</button></Link>
-                <button onClick={() => { onDelete(savedResult)  }}>Delete note</button>
+                <h3>{savedNote.myNote}</h3>
+                <Link to={`/notes/${savedNote._id}/edit`}><button>Edit</button></Link>
+                <button onClick={() => {onDeleteNote(savedNote)}}>Delete note</button>
             </div>
         )
     }
 }
 
-export default withRouter(SavedResultDetail)
+export default withRouter(SavedNote)

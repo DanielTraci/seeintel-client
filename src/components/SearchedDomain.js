@@ -2,11 +2,10 @@ import React, { Component } from 'react'
 import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 import config from '../config'
-import AddNote from './AddNote'
-import SavedResultDetail from './SavedResultDetail'
+import SearchBar from './SearchBar'
 
 
-class SingleDomain extends Component {
+class SearchedDomain extends Component {
     state = {
         domainDetails: null
     }
@@ -35,13 +34,11 @@ class SingleDomain extends Component {
             return <h2>Loading...</h2>;
         }
 
-
-        let lastAnalysisStats = Object.keys(domainDetails.attributes.last_analysis_stats)
         let categories = Object.keys(domainDetails.attributes.categories)
-        
+        let lastAnalysisResults = Object.keys(domainDetails.attributes.last_analysis_results)
         
         {/*
-        let lastAnalysisResults = Object.keys(domainDetails.attributes.last_analysis_results)
+        let lastAnalysisStats = Object.keys(domainDetails.attributes.last_analysis_stats)
         let lastHttpsCert = Object.keys(domainDetails.attributes.last_https_certificate)
         */}
 
@@ -49,11 +46,12 @@ class SingleDomain extends Component {
             <div>
                 <h1>.</h1>
                 <h1>.</h1>
+                <SearchBar/>
                 <button onClick={() => {onSaveDomain(domainDetails)}}>Save to my dashboard</button>
                 <p><b>ID:</b> {domainDetails.id}</p>
                 <p><b>Type:</b> {domainDetails.type}</p>
                 <p><b>Registrar:</b> {domainDetails.attributes.registrar}</p>
-                <p><b>Categories</b>. Cybersecurity companies' APIs list {domainDetails.id} in the following categories:</p>
+                <p><b>Categories</b>. Cyber security companies' APIs list {domainDetails.id} in the following categories:</p>
                 {
                     categories.map((category) => {
                         return (
@@ -66,15 +64,28 @@ class SingleDomain extends Component {
                     })
                 }
                 <p><b>JARM:</b> {domainDetails.attributes.jarm}</p>
-                <p><b>Creation_date:</b> {domainDetails.attributes.creation_date}</p>
-                <p><b>Last_dns_records_date:</b> {domainDetails.attributes.last_dns_records_date}</p>
-                <p><b>Last_https_certificate_date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
-                <p><b>Last_modification_date:</b> {domainDetails.attributes.last_modification_date}</p>
-                <p><b>Last_update_date:</b> {domainDetails.attributes.last_update_date}</p>
+                <p><b>Creation date:</b> {domainDetails.attributes.creation_date}</p>
+                <p><b>Last dns records date:</b> {domainDetails.attributes.last_dns_records_date}</p>
+                <p><b>Last https_certificate date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
+                <p><b>Last modification date:</b> {domainDetails.attributes.last_modification_date}</p>
+                <p><b>Last update date:</b> {domainDetails.attributes.last_update_date}</p>
                 <p><b>Whois:</b> {domainDetails.attributes.whois}</p>
-                <p><b>Whois_date:</b> {domainDetails.attributes.whois_date}</p>
+                <p><b>Whois date:</b> {domainDetails.attributes.whois_date}</p>
+                <p><b>Last analysis results provided by cyber security companies:</b></p>
+                {
+                    lastAnalysisResults.map((singleResult) => {
+                        return (
+                            <div>
+                            <li><b>{singleResult}</b></li>
+                                <p>Category: <i>{domainDetails.attributes.last_analysis_results[singleResult].category}</i></p>
+                                <p>Result: <i>{domainDetails.attributes.last_analysis_results[singleResult].result}</i></p>
+                            </div>
+                    )
+                    })
+                }
             
-{/*                 {
+                {/*                 
+                {
                     lastAnalysisStats.map((singleStat) => {
                         return (
                             <div>
@@ -82,7 +93,8 @@ class SingleDomain extends Component {
                             </div>
                         )
                     })
-                } */}
+                } 
+                */}
                 
                
                 {/*//////////////
@@ -98,23 +110,11 @@ class SingleDomain extends Component {
                     })
                 }
                 
-                <p><b>Last_analysis_results:</b></p>
-                {
-                    lastAnalysisResults.map((singleResult) => {
-                        return (
-                            <div>
-                                <p><b>{singleResult}</b></p>
-                                <p>Category: {domainDetails.attributes.last_analysis_results[singleResult].category}</p>
-                                <p>Result: {domainDetails.attributes.last_analysis_results[singleResult].result}</p>
-                                <p>Method: {domainDetails.attributes.last_analysis_results[singleResult].method}</p>
-                            </div>
-                    )
-                    })
-                }
+
                 //////////////*/}
             </div>
         )
     }
 }
 
-export default withRouter(SingleDomain)
+export default withRouter(SearchedDomain)

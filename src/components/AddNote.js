@@ -9,7 +9,9 @@ export default class AddNote extends Component {
                 <h3>Add notes to keep track of things</h3>
                 <form onSubmit={onAdd}>
                     <textarea type="text" name="myNote" />
+                    <div>
                     <button>Save</button>
+                    </div>
                 </form>
             </div>
         )

@@ -6,7 +6,7 @@ import config from '../config'
 export default class EditNote extends Component {
 
     state = {
-        savedResult: {},
+        savedNote: {},
         //fetchNote: true
     }
 
@@ -15,7 +15,7 @@ export default class EditNote extends Component {
         axios.get(`${config.API_URL}/api/notes/${noteId}`, { withCredentials: true })
             .then((response) => {
                     this.setState({ 
-                        savedResult: response.data, 
+                        savedNote: response.data, 
                         //fetchNote: false
                     })
             })
@@ -27,20 +27,20 @@ export default class EditNote extends Component {
     handleEditNote = (event) => {
         event.preventDefault()
         let updatedNote = event.target.value
-        const { savedResult } = this.state
-        let cloneSavedResult = JSON.parse(JSON.stringify(savedResult))
+        const { savedNote } = this.state
+        let cloneSavedNote = JSON.parse(JSON.stringify(savedNote))
 
-        cloneSavedResult.myNote = updatedNote
+        cloneSavedNote.myNote = updatedNote
 
         this.setState({
-            savedResult: cloneSavedResult
+            savedNote: cloneSavedNote
         })
     }
 
 
 
     render() {
-        const {savedResult} = this.state
+        const {savedNote} = this.state
         const {onEdit} = this.props
         return (
             <div>
@@ -48,8 +48,8 @@ export default class EditNote extends Component {
                 <h1>.</h1>
                 <h1>Edit note</h1>
                 <form>
-                    <textarea onChange={this.handleEditNote} type="text" value={savedResult.myNote} />
-                    <button onClick={() => {onEdit(savedResult)}}>Save note</button>
+                    <textarea onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
+                    <button onClick={() => {onEdit(savedNote)}}>Save note</button>
                 </form>
             </div>
         )

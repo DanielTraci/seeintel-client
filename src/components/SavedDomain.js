@@ -1,21 +1,42 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import config from '../config'
-import { withRouter, Link } from "react-router-dom";
 import AddNote from './AddNote';
+import SearchBar from './SearchBar'
+import {Link, withRouter} from "react-router-dom"
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }));
+
+  
 export default class SavedDomain extends Component {
 
     state = {
         savedDomain: [],
-        fetchDomain: true
+        fetchDomain: true,
+        notes: [],
+        savedNote: [],
+        fetchNote: true
     }
     
-
     componentDidMount () {
         let domainId = this.props.match.params.domainId
         axios.get(`${config.API_URL}/api/domains/${domainId}`, { withCredentials: true })
             .then((response) => {
+                console.log(response.data.myNote)
                     this.setState({ 
                         savedDomain: response.data, 
                         fetchDomain: false
@@ -29,28 +50,143 @@ export default class SavedDomain extends Component {
     }
 
     render() {
-        const { savedDomain } = this.state
-        const { onAdd } = this.props
+        const { savedDomain, notes, savedNote, fetchNote } = this.state
+        const { myNote } = savedDomain
+        const { onAdd, onDeleteNote } = this.props
+        const { onDeleteDomain } = this.props
+
         if (!savedDomain.data) {
             return <h2>Loading...</h2>;
         }
+        
         let parsedData 
-        console.log(savedDomain.myNote)
         if(savedDomain.data){
             parsedData = JSON.parse(savedDomain.data)
-            console.log(parsedData.attributes.last_dns_records)
         }
-
+        
         let categories = Object.keys(parsedData.attributes.categories)
+        let lastAnalysisResults = Object.keys(parsedData.attributes.last_analysis_results)
         return (
+            
+            <div className={classes.root}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography className={classes.heading}>Accordion 1</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                  sit amet blandit leo lobortis eget.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography className={classes.heading}>Accordion 2</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                  sit amet blandit leo lobortis eget.
+                </Typography>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion disabled>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel3a-content"
+                id="panel3a-header"
+              >
+                <Typography className={classes.heading}>Disabled Accordion</Typography>
+              </AccordionSummary>
+            </Accordion>
+          
+            </div>
+        )
+    }
+}
+
+
+
+/* 
+    <div className={classes.root}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Accordion 1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography className={classes.heading}>Accordion 2</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disabled>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3a-content"
+          id="panel3a-header"
+        >
+          <Typography className={classes.heading}>Disabled Accordion</Typography>
+        </AccordionSummary>
+      </Accordion>
+    </div>
+
+*/
+
+
+/* 
             <div>
-                <h3>Your Intel</h3>  
+                <h3>Your Intel</h3>
+                <SearchBar/>  
                 <h3>SEEINTEL for {parsedData.id}</h3> 
+                <button onClick={() => {onDeleteDomain(savedDomain)}}>Delete this search result</button>
+                <h3>Your notes:</h3>
+                {
+                    myNote.map((note) => {
+                        return (
+                        <div key={note._id}>
+                            <Link to={`/notes/${note._id}`}>{note.myNote}</Link>
+                            <div>
+                            <Link to={`/notes/${note._id}/edit`}><button>Edit</button></Link>
+                            <button onClick={() => {onDeleteNote(note)}}>Delete note</button>
+                            </div>
+                        </div>
+                        )
+                    })
+                }
                 <AddNote onAdd={onAdd}/>
                 <p><b>ID:</b> {parsedData.id}</p>
                 <p><b>Type:</b> {parsedData.type}</p>
                 <p><b>Registrar:</b> {parsedData.attributes.registrar}</p>
-                <p><b>Categories</b>. Cybersecurity companies' APIs list {parsedData.id} in the following categories:</p>
+                <p><b>Categories</b>. Cyber security companies' APIs list {parsedData.id} in the following categories:</p>
                 {
                     categories.map((category) => {
                         return (
@@ -69,12 +205,17 @@ export default class SavedDomain extends Component {
                 <p><b>Last_update_date:</b> {parsedData.attributes.last_update_date}</p>
                 <p><b>Whois_date:</b> {parsedData.attributes.whois_date}</p>
                 <p><b>Whois:</b> {parsedData.attributes.whois}</p>
-
-                
-{/*                                   
-                
-                <p><b>Whois_date:</b> {savedDomain.whois_date}</p> */}
+                <p><b>Last analysis results</b> provided by cyber security companies:</p>
+                {
+                    lastAnalysisResults.map((singleResult) => {
+                        return (
+                            <div>
+                                <li><b>{singleResult}</b></li>
+                                <p>Category: <i>{parsedData.attributes.last_analysis_results[singleResult].category}</i></p>
+                                <p>Result: <i>{parsedData.attributes.last_analysis_results[singleResult].result}</i></p>
+                            </div>
+                    )
+                    })
+                }
             </div>
-        )
-    }
-}
+*/
