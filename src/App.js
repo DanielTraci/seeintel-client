@@ -102,23 +102,30 @@ class App extends Component {
  
   }
 
-  handleAddNote = (event) => {
+  handleAddNote = (event, domainId) => {
     event.preventDefault()
+
     let newNote = {
-      myNote: event.target.myNote.value
+      myNote: event.target.myNote.value,
     }
-    console.log(newNote)
+    event.target.myNote.value = ''
     axios.post(`${config.API_URL}/api/create`, newNote, {withCredentials: true})
       .then((response) => {
         console.log(response.data)
+          axios.patch(`${config.API_URL}/api/domains/${domainId}`, {myNote: response.data._id} , {withCredentials: true})
+          .then((result) => {
+            this.setState({
+              notes: [response.data , ...this.state.notes],
+              domains: [result.data, ...this.state.domains]
+            })
+          }).catch((err) => { 
+          });
 
-          this.setState({
-            notes: [response.data , ...this.state.notes]
-          })
       })
       .catch(() => {
         console.log('Add note failed')
       })
+      
   }
 
   handleDeleteNote = (savedNote) => {
@@ -130,6 +137,8 @@ class App extends Component {
         this.setState({
           notes: filterNotes
         })
+    }, () => {
+      this.props.history.push('/user')
     })
     .catch(() => {
         console.log('Delete failed')
@@ -137,7 +146,8 @@ class App extends Component {
 
 }
 
-  handleEdit = (savedNote) => {
+  handleEdit = (event, savedNote) => {
+    event.preventDefault()
     axios.patch(`${config.API_URL}/api/notes/${savedNote._id}`, savedNote)
       .then(() => {
           let updatedNotes = this.state.notes.map((note) => {
@@ -150,7 +160,8 @@ class App extends Component {
         this.setState({
           notes: updatedNotes
         }, () => {
-          this.props.history.push('/user')
+          console.log('Inside edit note')
+          this.props.history.goBack()
         })
       })
       .catch(() =>{

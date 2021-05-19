@@ -34,9 +34,7 @@ class SavedNote extends Component {
         
         return (
             <div>
-                <h2>empty space</h2>
-                <h2>empty space</h2>
-                <h2>Saved notes (will go away)</h2>
+                <h2>Edit your note</h2>
                 <h3>{savedNote.myNote}</h3>
                 <Link to={`/notes/${savedNote._id}/edit`}><button>Edit</button></Link>
                 <button onClick={() => {onDeleteNote(savedNote)}}>Delete note</button>

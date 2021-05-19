@@ -3,7 +3,22 @@ import {withRouter} from 'react-router-dom'
 import axios from 'axios'
 import config from '../config'
 import SearchBar from './SearchBar'
+import { makeStyles } from '@material-ui/core/styles';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+  }));
 
 class SearchedDomain extends Component {
     state = {
@@ -27,8 +42,8 @@ class SearchedDomain extends Component {
 
     render() {
         const {domainDetails} = this.state
-        /* const { onAdd } = this.props */
         const { onSaveDomain } = this.props
+        const classes = {}
 
         if (!domainDetails) {
             return <h2>Loading...</h2>;
@@ -44,8 +59,6 @@ class SearchedDomain extends Component {
 
         return (
             <div>
-                <h1>.</h1>
-                <h1>.</h1>
                 <SearchBar/>
                 <button onClick={() => {onSaveDomain(domainDetails)}}>Save to my dashboard</button>
                 <p><b>ID:</b> {domainDetails.id}</p>
@@ -69,10 +82,33 @@ class SearchedDomain extends Component {
                 <p><b>Last https_certificate date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
                 <p><b>Last modification date:</b> {domainDetails.attributes.last_modification_date}</p>
                 <p><b>Last update date:</b> {domainDetails.attributes.last_update_date}</p>
-                <p><b>Whois:</b> {domainDetails.attributes.whois}</p>
                 <p><b>Whois date:</b> {domainDetails.attributes.whois_date}</p>
-                <p><b>Last analysis results provided by cyber security companies:</b></p>
-                {
+                <div className={classes.root}>
+                <Accordion>
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    >
+                    <Typography className={classes.heading}>Whois</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>
+                        {domainDetails.attributes.whois}
+                    </Typography>
+                    </AccordionDetails>
+                </Accordion>
+                <Accordion>
+                    <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2a-content"
+                    id="panel2a-header"
+                    >
+                    <Typography className={classes.heading}>Last analysis results provided by cyber security companies</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                    <Typography>
+                    {
                     lastAnalysisResults.map((singleResult) => {
                         return (
                             <div>
@@ -82,7 +118,11 @@ class SearchedDomain extends Component {
                             </div>
                     )
                     })
-                }
+                    }
+                    </Typography>
+                    </AccordionDetails>
+                </Accordion>
+                </div>
             
                 {/*                 
                 {

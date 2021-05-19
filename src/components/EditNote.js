@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import config from '../config'
+import {withRouter} from 'react-router-dom'
 
 
-export default class EditNote extends Component {
+class EditNote extends Component {
 
     state = {
         savedNote: {},
@@ -37,21 +38,22 @@ export default class EditNote extends Component {
         })
     }
 
-
-
     render() {
         const {savedNote} = this.state
         const {onEdit} = this.props
         return (
             <div>
-                <h1>.</h1>
-                <h1>.</h1>
                 <h1>Edit note</h1>
-                <form>
+                <form onSubmit={(event) => {onEdit(event, savedNote)}}>
                     <textarea onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
-                    <button onClick={() => {onEdit(savedNote)}}>Save note</button>
+                    <div>
+                    <button>Save note</button>
+                    </div>
                 </form>
             </div>
         )
     }
 }
+
+
+export default withRouter(EditNote)

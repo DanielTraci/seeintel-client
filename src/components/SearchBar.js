@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { Button } from '@material-ui/core'
-import {Link, withRouter} from "react-router-dom"
-import axios from 'axios'
-import config from '../config'
+import {withRouter} from "react-router-dom"
 
+import {Typography, makeStyles, Box} from '@material-ui/core'
 
 
 class SearchBar extends Component {
@@ -15,10 +14,11 @@ class SearchBar extends Component {
     }
 
     render() {
-
+        const classes = {}
         return (
             <>
-                <h2>Browse cyber threat intelligence</h2>
+                
+                <Box><Typography variant="h4">Browse cyber threat intelligence</Typography>
                 <form onSubmit={this.handleSearch}>
                     <div>
                         <input type="text" name="website" placeholder="Enter a domain name" />
@@ -26,7 +26,9 @@ class SearchBar extends Component {
                     <div>
                         <Button type="submit" color="inherit">Search</Button>
                     </div>
-                </form>
+                    </form>
+                </Box>
+                
             </>
         )
     }
