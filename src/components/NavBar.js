@@ -1,7 +1,8 @@
 import React from 'react'
 import {AppBar, Toolbar, IconButton, Typography, Button, makeStyles} from '@material-ui/core'
 import { Link, Route } from 'react-router-dom'
-
+import logo from './covers/SEEINTEL white.png'
+import {withRouter} from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,10 +16,14 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
       backgroundColor: "#1e1e1e"
+    },
+    logo: {
+      maxWidth: 150,
+      marginRight: '10px'
     }
   }));
 
-export default function NavBar(props) {
+function NavBar(props) {
     const classes = useStyles();
     const {user, onLogout, onSignUp, onSignIn} = props
     return (
@@ -28,19 +33,20 @@ export default function NavBar(props) {
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                <Link to="/">HOME</Link>
+                
+                <img src={logo} alt="seeintel" className={classes.logo} />
 
                 </Typography>
                 {
                     user ? (
                     <>  
                         <Link to="/user">MY DASHBOARD</Link>
-                        <Button onClick={onLogout} color="inherit">Logout</Button>
+                        <Button variant="contained" onClick={onLogout}>Logout</Button>
                     </>
                     ) : (
                     <>  
-                        <Link to="/signin"><Button color="inherit">Sign in</Button></Link>
-                        <Link to="/signup"><Button color="inherit">Sign Up</Button></Link>
+                        <Link to="/signin"><Button variant="contained" >Sign in</Button></Link>
+                        <Link to="/signup"><Button variant="contained" >Sign Up</Button></Link>
                     </>
                     )
                 }  
@@ -49,3 +55,6 @@ export default function NavBar(props) {
         </div>
     )
 }
+
+
+export default withRouter(NavBar)

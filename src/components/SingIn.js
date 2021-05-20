@@ -1,10 +1,13 @@
 import React from 'react'
+import {Typography, Button, makeStyles} from '@material-ui/core'
+import {withRouter} from 'react-router-dom'
 
 function SignIn(props){
     const { onSignIn, error } = props
+    
     return (
         <form onSubmit={onSignIn}>
-            <h2>Sign in to SEEINTELL</h2>
+            <Typography variant="h3">Sign up to SEEINTELL</Typography>
             <div>
                 <label for="email">Email</label>
                 <input type="email" name='email'/>
@@ -18,4 +21,28 @@ function SignIn(props){
     )
 }
 
-export default SignIn
+export default withRouter(SignIn)
+
+
+
+/* 
+
+<div>
+      <TextField
+required
+id="filled-required"
+label="Email required"
+variant="filled"
+
+/>
+</div>
+<div>
+      <TextField
+required
+id="filled-required"
+label="Password required"
+variant="filled"
+/>
+</div>
+      
+      <Button type="submit" variant="contained">Sing up</Button> */

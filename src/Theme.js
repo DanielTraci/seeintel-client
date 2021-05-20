@@ -1,14 +1,17 @@
+import { blue } from '@material-ui/core/colors';
 import { createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: "#764abc"
+    overrides: {
+        MuiCssBaseline: {
+            '@global': {
+                color: "333333",
+            }
         }
-    },
-    background: {
-        default: "#fff"
-    },
+    }
+
+
+    
 
 })
 

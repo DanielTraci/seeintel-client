@@ -1,19 +1,32 @@
-import React, { Component } from 'react'
+import React, { Component} from 'react'
+import {withRouter} from 'react-router-dom'
+import {Typography, TextField, Button, makeStyles} from '@material-ui/core'
 
-export default class AddNote extends Component {
-    
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
+  
+class AddNote extends Component {
     render() {
         const {onAdd, domainId} = this.props
+        const classes = {}
         return (
             <div>
-                <h3>Add notes to keep track of things</h3>
-                <form onSubmit={(event) => {onAdd(event, domainId)}}>
-                    <textarea type="text" name="myNote" />
+                <Typography variant="h5">Add notes to keep track of things</Typography>
+                <form onSubmit={(event) => {onAdd(event, domainId)}} className={classes.root} noValidate autoComplete="off">
+                    <TextField id="filled-basic" label="Add your note" variant="filled" type="text" name="myNote" />
                     <div>
-                    <button>Save</button>
+                    <Button type="submit" variant="contained">Save</Button>
                     </div>
                 </form>
             </div>
         )
     }
 }
+
+export default withRouter(AddNote)

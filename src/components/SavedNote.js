@@ -2,9 +2,31 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import config from '../config'
 import { withRouter, Link } from "react-router-dom";
+import {Typography, Button, makeStyles} from '@material-ui/core'
+import {withStyles} from '@material-ui/core/styles'
+
+const styles = theme => ({
+    root: {
+        '& > *': {
+          margin: theme.spacing(1),
+        },
+      },
+    hero: {
+      backgroundImage: `url('./covers/01-red-min.png')`,
+      height: "700px",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+      position: "relative",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      fontSize: "4rem",
+    }
+  });
 
 class SavedNote extends Component {
-
+    
     state = {
         savedNote: [],
         fetchNote: true
@@ -27,20 +49,24 @@ class SavedNote extends Component {
     render() {
         const {savedNote, fetchNote} = this.state
         const {onDeleteNote} = this.props
-
+        const {classes} = this.props
+        
         if(fetchNote) {
             return <p>Loding ...</p>
         }
         
         return (
             <div>
-                <h2>Edit your note</h2>
-                <h3>{savedNote.myNote}</h3>
-                <Link to={`/notes/${savedNote._id}/edit`}><button>Edit</button></Link>
-                <button onClick={() => {onDeleteNote(savedNote)}}>Delete note</button>
+                
+                <Typography variant="h3">Your note</Typography>
+                <Typography variant="body1">{savedNote.myNote}</Typography>
+                <div className={classes.root}>
+                    <Link to={`/notes/${savedNote._id}/edit`}><Button variant="contained">Edit</Button></Link>
+                    <Button variant="contained" onClick={() => {onDeleteNote(savedNote)}}>Delete note</Button>
+                </div>
             </div>
         )
     }
 }
 
-export default withRouter(SavedNote)
+export default withStyles(styles)(SavedNote)

@@ -3,11 +3,13 @@ import SearchBar from './SearchBar'
 import axios from 'axios'
 import config from '../config'
 import { Link } from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
+import {withStyles} from '@material-ui/core/styles'
 import {Typography, makeStyles, Box} from '@material-ui/core'
 
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
     hero: {
-      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1558981852-426c6c22a060?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80')`,
+      backgroundImage: `url('./covers/01-red-min.png')`,
       height: "700px",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -16,13 +18,17 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      color: "#fff",
       fontSize: "4rem",
-    }
-  
-  }));
+    },
+    root: {
+        '& > *': {
+          margin: theme.spacing(1),
+        },
+      },
+    
+  });
 
-export default class UserDashboard extends Component {
+class UserDashboard extends Component {
     
     state = {
         notes: [],
@@ -38,21 +44,22 @@ export default class UserDashboard extends Component {
     }
 
     render() {
-        const classes = {}
+        const {classes} = this.props
         const {notes, domains} = this.state
+
         return (
             <div>
             <Box className={classes.hero}>               
             <Box>
             <Typography variant="h5">Welcome to your dashboard</Typography>
             <SearchBar/>                
-            <Typography variant="h5">Your saved search results</Typography>              
+            <Typography variant="h5">Your saved search results:</Typography>              
                 <Typography variant="body1">
                     {
                         domains.map((domain) => {
                             return (
                                 <div key={domain._id}>
-                                    <Link to={`/domains/${domain._id}`}>{domain.myDomain}</Link>
+                                    <li><Link to={`/domains/${domain._id}`}>{domain.myDomain}</Link></li>
                                 </div>
                             )
                         })
@@ -64,3 +71,5 @@ export default class UserDashboard extends Component {
         )
     }
 }
+
+export default withStyles(styles)(UserDashboard)

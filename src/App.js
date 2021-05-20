@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Switch, Route, withRouter } from "react-router-dom";
 import config from './config';
 import axios from 'axios';
+import "./App.css"
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SingIn";
 import UserDashboard from "./components/UserDashboard";
@@ -11,6 +12,7 @@ import HomePage from "./components/HomePage";
 import SavedNote from "./components/SavedNote";
 import EditNote from "./components/EditNote";
 import SavedDomain from "./components/SavedDomain";
+
 
 
 
@@ -209,7 +211,7 @@ class App extends Component {
   render() {
     const{error, user, notes, domains} = this.state
     return (
-      <div>
+      <div className='globalFont'>
         <NavBar onLogout={this.handleLogout} user={user}/>
         <Switch>
           <Route exact path="/" component={HomePage} />

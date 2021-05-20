@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import config from '../config'
 import {withRouter} from 'react-router-dom'
-
+import {Typography, TextField, Button, makeStyles} from '@material-ui/core'
 
 class EditNote extends Component {
 
@@ -41,13 +41,14 @@ class EditNote extends Component {
     render() {
         const {savedNote} = this.state
         const {onEdit} = this.props
+        const classes = {}
         return (
             <div>
-                <h1>Edit note</h1>
+                <Typography variant="h3">Edit your note</Typography>
                 <form onSubmit={(event) => {onEdit(event, savedNote)}}>
-                    <textarea onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
+                <TextField id="filled-basic" variant="filled" onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
                     <div>
-                    <button>Save note</button>
+                    <Button type="submit" variant="contained">Save note</Button>
                     </div>
                 </form>
             </div>

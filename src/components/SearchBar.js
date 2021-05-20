@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
-import { Button } from '@material-ui/core'
-import {withRouter} from "react-router-dom"
+import { withRouter } from "react-router-dom"
+import { Typography, TextField, Input, Button, makeStyles, Box } from '@material-ui/core'
 
-import {Typography, makeStyles, Box} from '@material-ui/core'
-
+const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: '25ch',
+    },
+  }));
 
 class SearchBar extends Component {
 
@@ -16,20 +26,21 @@ class SearchBar extends Component {
     render() {
         const classes = {}
         return (
-            <>
-                
+            <div>
+
                 <Box><Typography variant="h4">Browse cyber threat intelligence</Typography>
-                <form onSubmit={this.handleSearch}>
-                    <div>
-                        <input type="text" name="website" placeholder="Enter a domain name" />
-                    </div>
-                    <div>
-                        <Button type="submit" color="inherit">Search</Button>
-                    </div>
+                    <form onSubmit={this.handleSearch}>
+                        <div>
+                            <Input type="text" name="website" placeholder="Enter a domain name" inputProps={{ 'aria-label': 'description' }} />
+                        </div>
+
+                        <div>
+                            <Button variant="contained" type="submit" color="black">Search</Button>
+                        </div>
                     </form>
                 </Box>
-                
-            </>
+
+            </div>
         )
     }
 }
