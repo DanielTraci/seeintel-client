@@ -44,10 +44,14 @@ class EditNote extends Component {
         const classes = {}
         return (
             <div>
+            <br/>
                 <Typography variant="h3">Edit your note</Typography>
+                <br/>
                 <form onSubmit={(event) => {onEdit(event, savedNote)}}>
-                <TextField id="filled-basic" variant="filled" onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
+                <TextField className='formBackground' id="filled-basic" variant="filled" onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
+                    
                     <div>
+                    <br/>
                     <Button type="submit" variant="contained">Save note</Button>
                     </div>
                 </form>

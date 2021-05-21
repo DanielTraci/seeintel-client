@@ -4,7 +4,7 @@ import axios from 'axios'
 import config from '../config'
 import SearchBar from './SearchBar'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {Accordion, AccordionSummary, AccordionDetails, Typography, Button, makeStyles} from '@material-ui/core'
+import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, makeStyles } from '@material-ui/core'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -56,32 +56,36 @@ class SearchedDomain extends Component {
 
         return (
             <div>
+            <div className="padding">
+                <br />
                 <SearchBar />
+                <br />
                 <Button variant="contained" onClick={() => { onSaveDomain(domainDetails) }}>Save to my dashboard</Button>
+                <br />
                 <Typography>
-                <p><b>ID:</b> {domainDetails.id}</p>
-                <p><b>Type:</b> {domainDetails.type}</p>
-                <p><b>Registrar:</b> {domainDetails.attributes.registrar}</p>
-                <p><b>Categories</b>. Cyber security companies' APIs list {domainDetails.id} in the following categories:</p>
-                {
-                    categories.map((category) => {
-                        return (
-                            <div>
-                                <ul>
-                                    <li><i>{domainDetails.attributes.categories[category]}</i></li>
-                                </ul>
-                            </div>
-                        )
-                    })
-                }
-                <p><b>JARM:</b> {domainDetails.attributes.jarm}</p>
-                <p><b>Creation date:</b> {domainDetails.attributes.creation_date}</p>
-                <p><b>Last dns records date:</b> {domainDetails.attributes.last_dns_records_date}</p>
-                <p><b>Last https_certificate date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
-                <p><b>Last modification date:</b> {domainDetails.attributes.last_modification_date}</p>
-                <p><b>Last update date:</b> {domainDetails.attributes.last_update_date}</p>
+                    <p><b>ID:</b> {domainDetails.id}</p>
+                    <p><b>Type:</b> {domainDetails.type}</p>
+                    <p><b>Registrar:</b> {domainDetails.attributes.registrar}</p>
+                    <p><b>Categories</b>. Cyber security companies' APIs list {domainDetails.id} in the following categories:</p>
+                    {
+                        categories.map((category) => {
+                            return (
+                                <div>
+                                    <ul>
+                                        <li><i>{domainDetails.attributes.categories[category]}</i></li>
+                                    </ul>
+                                </div>
+                            )
+                        })
+                    }
+                    <p><b>JARM:</b> {domainDetails.attributes.jarm}</p>
+                    <p><b>Creation date:</b> {domainDetails.attributes.creation_date}</p>
+                    <p><b>Last dns records date:</b> {domainDetails.attributes.last_dns_records_date}</p>
+                    <p><b>Last https_certificate date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
+                    <p><b>Last modification date:</b> {domainDetails.attributes.last_modification_date}</p>
+                    <p><b>Last update date:</b> {domainDetails.attributes.last_update_date}</p>
                 </Typography>
-                
+
                 <div className={classes.root}>
                     <Accordion>
                         <AccordionSummary
@@ -93,7 +97,7 @@ class SearchedDomain extends Component {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Typography>
-                                <p><b>Whois date:</b> {domainDetails.attributes.whois_date}</p> 
+                                <p><b>Whois date:</b> {domainDetails.attributes.whois_date}</p>
                                 {domainDetails.attributes.whois}
                             </Typography>
                         </AccordionDetails>
@@ -152,6 +156,7 @@ class SearchedDomain extends Component {
                 
 
                 //////////////*/}
+            </div>
             </div>
         )
     }

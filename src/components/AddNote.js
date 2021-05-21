@@ -19,10 +19,13 @@ class AddNote extends Component {
             <div>
                 <Typography variant="h5">Add notes to keep track of things</Typography>
                 <form onSubmit={(event) => {onAdd(event, domainId)}} className={classes.root} noValidate autoComplete="off">
-                    <TextField id="filled-basic" label="Add your note" variant="filled" type="text" name="myNote" />
+                    <TextField className='formBackground' id="filled-basic" label="Add your note" variant="filled" type="text" name="myNote" />
+                    <br/>
                     <div>
+                    <br/>
                     <Button type="submit" variant="contained">Save</Button>
                     </div>
+                    
                 </form>
             </div>
         )
