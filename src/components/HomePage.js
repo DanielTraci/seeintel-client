@@ -41,10 +41,9 @@ function HomePage() {
         <Box className={classes.hero}>
           <Box className={classes.pageTitle}>
             <Typography variant="h3">SEEINTEL is your one-stop source to access cyber threat intelligence from multiple origins</Typography>
-          </Box>
-          <Box className={classes.pageTitle}>
             <Typography variant="h6">Soon to be integrated with CSI Linux</Typography>
           </Box>
+     
           <Box className={classes.btns}>
             <Link to="/signin"><Button className='margin' variant="contained">Sign in</Button></Link>
             <Link to="/signup"><Button className='margin' variant="contained">Sign Up</Button></Link>
