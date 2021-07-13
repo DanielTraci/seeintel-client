@@ -45,7 +45,7 @@ class SearchBar extends Component {
             <div>
                 <div className='center'>
                     <Box className={classes.pageTitle}>
-                        <Typography className="searchBarText" variant="h4">Browse cyber threat intelligence</Typography>
+                        <Typography className="searchBarText" variant="h4">Browse cyber threat intel</Typography>
                     </Box>
                 </div>
                 <br/>
@@ -60,6 +60,28 @@ class SearchBar extends Component {
                                     type="text"
                                     name="website"
                                     label="Enter a domain name"
+                                    className='formBackground'
+                                />
+                                </Grid>
+                            </div>
+                                <br/>
+                            <div className='center'>
+                                <Button variant="contained" type="submit" color="black">Search</Button>
+                            </div>
+                        </form>
+                    </Box>
+                </div>
+                <div className='center'>
+                    <Box className={classes.search}>
+                        <form onSubmit={this.handleSearch}>
+                            <div>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    fullWidth
+                                    type="text"
+                                    name="website"
+                                    label="experiment"
                                     className='formBackground'
                                 />
                                 </Grid>
