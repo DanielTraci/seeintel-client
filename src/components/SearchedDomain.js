@@ -5,7 +5,7 @@ import config from '../config'
 import SearchBar from './SearchBar'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Button, makeStyles } from '@material-ui/core'
-
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -56,79 +56,95 @@ class SearchedDomain extends Component {
 
         return (
             <div>
-            <div className="padding">
-                <br />
-                <SearchBar />
-                <br />
-                <Button variant="contained" onClick={() => { onSaveDomain(domainDetails) }}>Save to my dashboard</Button>
-                <br />
-                <Typography>
-                    <p><b>ID:</b> {domainDetails.id}</p>
-                    <p><b>Type:</b> {domainDetails.type}</p>
-                    <p><b>Registrar:</b> {domainDetails.attributes.registrar}</p>
-                    <p><b>Categories</b>. Cyber security companies' APIs list {domainDetails.id} in the following categories:</p>
-                    {
-                        categories.map((category) => {
-                            return (
-                                <div>
-                                    <ul>
-                                        <li><i>{domainDetails.attributes.categories[category]}</i></li>
-                                    </ul>
-                                </div>
-                            )
-                        })
-                    }
-                    <p><b>JARM:</b> {domainDetails.attributes.jarm}</p>
-                    <p><b>Creation date:</b> {domainDetails.attributes.creation_date}</p>
-                    <p><b>Last dns records date:</b> {domainDetails.attributes.last_dns_records_date}</p>
-                    <p><b>Last https_certificate date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
-                    <p><b>Last modification date:</b> {domainDetails.attributes.last_modification_date}</p>
-                    <p><b>Last update date:</b> {domainDetails.attributes.last_update_date}</p>
-                </Typography>
+                <div className="padding">
+                    <br />
+                    <SearchBar />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <Typography variant="h4" align="center">SEEINTEL for {domainDetails.id}</Typography>
+                    <br />
+                    <br />
+                    <Button variant="contained" onClick={() => { onSaveDomain(domainDetails) }}>Save intel to my dashboard</Button>
+                    <br />
 
-                <div className={classes.root}>
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel1a-content"
-                            id="panel1a-header"
-                        >
-                            <Typography className={classes.heading}><b>Whois</b></Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={6}>
+
                             <Typography>
-                                <p><b>Whois date:</b> {domainDetails.attributes.whois_date}</p>
-                                {domainDetails.attributes.whois}
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                    <Accordion>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls="panel2a-content"
-                            id="panel2a-header"
-                        >
-                            <Typography className={classes.heading}><b>Last analysis results</b> provided by cyber security companies</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
+                                <p><b>ID:</b> {domainDetails.id}</p>
+                                <p><b>Type:</b> {domainDetails.type}</p>
+                                <p><b>Registrar:</b> {domainDetails.attributes.registrar}</p>
+                                <p><b>Categories</b>. Cyber security companies' APIs list {domainDetails.id} in the following categories:</p>
                                 {
-                                    lastAnalysisResults.map((singleResult) => {
+                                    categories.map((category) => {
                                         return (
                                             <div>
-                                                <li><b>{singleResult}</b></li>
-                                                <p>Category: <i>{domainDetails.attributes.last_analysis_results[singleResult].category}</i></p>
-                                                <p>Result: <i>{domainDetails.attributes.last_analysis_results[singleResult].result}</i></p>
+                                                <ul>
+                                                    <li><i>{domainDetails.attributes.categories[category]}</i></li>
+                                                </ul>
                                             </div>
                                         )
                                     })
                                 }
+                                <p><b>JARM:</b> {domainDetails.attributes.jarm}</p>
+                                <p><b>Creation date:</b> {domainDetails.attributes.creation_date}</p>
+                                <p><b>Last dns records date:</b> {domainDetails.attributes.last_dns_records_date}</p>
+                                <p><b>Last https_certificate date:</b> {domainDetails.attributes.last_https_certificate_date}</p>
+                                <p><b>Last modification date:</b> {domainDetails.attributes.last_modification_date}</p>
+                                <p><b>Last update date:</b> {domainDetails.attributes.last_update_date}</p>
                             </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                </div>
 
-                {/*                 
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+
+                            <div className={classes.root}>
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography className={classes.heading}><b>Whois</b></Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>
+                                            <p><b>Whois date:</b> {domainDetails.attributes.whois_date}</p>
+                                            {domainDetails.attributes.whois}
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel2a-content"
+                                        id="panel2a-header"
+                                    >
+                                        <Typography className={classes.heading}><b>Last analysis results</b> provided by cyber security companies</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <Typography>
+                                            {
+                                                lastAnalysisResults.map((singleResult) => {
+                                                    return (
+                                                        <div>
+                                                            <li><b>{singleResult}</b></li>
+                                                            <p>Category: <i>{domainDetails.attributes.last_analysis_results[singleResult].category}</i></p>
+                                                            <p>Result: <i>{domainDetails.attributes.last_analysis_results[singleResult].result}</i></p>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                        </Typography>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </div>
+
+                        </Grid>
+                    </Grid>
+
+                    {/*                 
                 {
                     lastAnalysisStats.map((singleStat) => {
                         return (
@@ -141,7 +157,7 @@ class SearchedDomain extends Component {
                 */}
 
 
-                {/*//////////////
+                    {/*//////////////
 
                 {
                     lastHttpsCert.map((certDetails) => {
@@ -156,7 +172,7 @@ class SearchedDomain extends Component {
                 
 
                 //////////////*/}
-            </div>
+                </div>
             </div>
         )
     }

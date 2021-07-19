@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import config from '../config'
-import {withRouter} from 'react-router-dom'
-import {Typography, TextField, Button, makeStyles} from '@material-ui/core'
+import { withRouter } from 'react-router-dom'
+import { Typography, TextField, Button, makeStyles } from '@material-ui/core'
 
 class EditNote extends Component {
 
@@ -11,14 +11,14 @@ class EditNote extends Component {
         //fetchNote: true
     }
 
-    componentDidMount () {
+    componentDidMount() {
         let noteId = this.props.match.params.noteId
         axios.get(`${config.API_URL}/api/notes/${noteId}`, { withCredentials: true })
             .then((response) => {
-                    this.setState({ 
-                        savedNote: response.data, 
-                        //fetchNote: false
-                    })
+                this.setState({
+                    savedNote: response.data,
+                    //fetchNote: false
+                })
             })
             .catch(() => {
                 console.log('Detail fetch failed')
@@ -39,20 +39,22 @@ class EditNote extends Component {
     }
 
     render() {
-        const {savedNote} = this.state
-        const {onEdit} = this.props
+        const { savedNote } = this.state
+        const { onEdit } = this.props
         const classes = {}
         return (
             <div>
-            <br/>
+                <br />
                 <Typography variant="h3">Edit your note</Typography>
-                <br/>
-                <form onSubmit={(event) => {onEdit(event, savedNote)}}>
-                <TextField className='formBackground' id="filled-basic" variant="filled" onChange={this.handleEditNote} type="text" value={savedNote.myNote} />
-                    
+                <br />
+                <form onSubmit={(event) => { onEdit(event, savedNote) }}>
+
+                    <TextField className='formBackground' id="outlined-multiline-static" onChange={this.handleEditNote} value={savedNote.myNote} multiline
+                        rows={2} variant="filled" type="text" name="myNote" fullWidth margin="normal"
+                        InputProps={{ className: classes.input }} />
                     <div>
-                    <br/>
-                    <Button type="submit" variant="contained">Save note</Button>
+                        <br />
+                        <Button type="submit" variant="contained">Save note</Button>
                     </div>
                 </form>
             </div>

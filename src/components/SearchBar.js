@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
+        marginBottom: theme.spacing(50)
 
     },
     textField: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        
 
     },
     pageTitle: {
@@ -28,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "4rem",
         textAlign: "center",
         padding: "100px 120px 0 120px",
+    },
+    input: {
+        color: "#FFFFFF",
+        borderColor: '#FFFFFF'
     },
 }));
 
@@ -39,13 +45,19 @@ class SearchBar extends Component {
         this.props.history.push(`/search/${domain}`)
     }
 
+    /* handleDomainSearch = (e) => {
+        e.preventDefault()
+        let domain = e.target.website.value
+        this.props.history.push(`/domainsearch/${domain}`)
+    } */
+
     render() {
         const classes = {}
         return (
-            <div>
+            <div className={classes.root}>
                 <div className='center'>
                     <Box className={classes.pageTitle}>
-                        <Typography className="searchBarText" variant="h4">Browse cyber threat intel</Typography>
+                        <Typography className="searchBarText" variant="h4">Browse domain threat intel</Typography>
                     </Box>
                 </div>
                 <br/>
@@ -58,9 +70,9 @@ class SearchBar extends Component {
                                     variant="outlined"
                                     fullWidth
                                     type="text"
-                                    name="website"
-                                    label="Enter a domain name"
+                                    name="website"                                    
                                     className='formBackground'
+                                    
                                 />
                                 </Grid>
                             </div>
@@ -71,9 +83,10 @@ class SearchBar extends Component {
                         </form>
                     </Box>
                 </div>
+               {/*  
                 <div className='center'>
                     <Box className={classes.search}>
-                        <form onSubmit={this.handleSearch}>
+                        <form onSubmit={this.handleDomainSearch}>
                             <div>
                             <Grid item xs={12}>
                                 <TextField
@@ -93,7 +106,7 @@ class SearchBar extends Component {
                         </form>
                     </Box>
                 </div>
-
+ */}
             </div>
         )
     }

@@ -14,7 +14,7 @@ const styles = theme => ({
 
     hero: {
         backgroundImage: `url('./covers/08_00000-min.png')`,
-        height: "300px",
+        height: "200px",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -24,7 +24,6 @@ const styles = theme => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: "4rem",
         textAlign: "center",
         padding: "100px 120px 0 120px",
     },
@@ -65,16 +64,15 @@ class SavedNote extends Component {
             <div>
                 <Box>
                     <Box className={classes.hero}>
-                        <Typography className={classes.pageTitle} variant="h3">Your note</Typography>
+                        <Typography className={classes.pageTitle} variant="h4">Your note</Typography>
                     </Box>
-                    <Box>
-                        <Typography variant="body1">{savedNote.myNote}</Typography>
+                    <Typography variant="h6" align="center">{savedNote.myNote}</Typography>
+                    <Box display="flex" justifyContent="center">
                         <div className={classes.root}>
                             <Link to={`/notes/${savedNote._id}/edit`}><Button variant="contained">Edit</Button></Link>
                             <Button variant="contained" onClick={() => { onDeleteNote(savedNote) }}>Delete note</Button>
                         </div>
                     </Box>
-                    
                 </Box>
             </div>
         )

@@ -13,6 +13,7 @@ import SavedNote from "./components/SavedNote";
 import EditNote from "./components/EditNote";
 import SavedDomain from "./components/SavedDomain";
 import DomainSearch from "./components/DomainSearch"
+import Footer from "./components/Footer";
 
 
 class App extends Component {
@@ -211,7 +212,7 @@ class App extends Component {
   render() {
     const { error, user, notes, domains } = this.state
     return (
-      <div className='globalFont'>
+      <div >
         <NavBar onLogout={this.handleLogout} user={user} />
         <Switch>
           <Route exact path="/" component={HomePage} />
@@ -251,6 +252,7 @@ class App extends Component {
           }} />
 
         </Switch>
+        <Footer/>
       </div>
     )
   }

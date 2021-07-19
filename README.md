@@ -175,8 +175,11 @@ https://github.com/DanielTraci/seeintel-server
 [Slides Link](http://slides.com)
 
 
+
+<!-- 
+change env to - http://localhost:5005
 # !!! DANGEROUS WEBSITES to test the application. DO NOT ENTER ANY OF THESE WEBSITES !!!
-<!-- 17ebook.com
+17ebook.com
 dfwdiesel.net
 divineenterprises.net
 ginedis.com

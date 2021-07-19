@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, Box, Grid } from '@material-ui/core'
 import { Link, Route } from 'react-router-dom'
 import logo from '../logo/SEEINTEL white.png'
 import { withRouter } from 'react-router-dom'
@@ -30,7 +30,13 @@ function NavBar(props) {
     <div>
       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+        <Grid item xs={12}>
+<Box display="flex" justifyContent="center">
+<img src={logo} alt="seeintel" className={classes.logo} />
+</Box>
+</Grid>
+        
+          {/* <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             {
@@ -46,8 +52,9 @@ function NavBar(props) {
 
             }
 
-          </Typography>
-          {
+          </Typography> */}
+
+          {/* {
             user ? (
               <>
                 <Link to="/user" className='margin'>MY DASHBOARD</Link>
@@ -59,7 +66,7 @@ function NavBar(props) {
                 <Link to="/signup"><Button className='margin' variant="contained" >Sign Up</Button></Link>
               </>
             )
-          }
+          } */}
 
         </Toolbar>
       </AppBar>
